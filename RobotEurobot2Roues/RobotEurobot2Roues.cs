@@ -75,6 +75,7 @@ namespace RobotEurobot2Roues
 
             robotMsgProcessor.OnPolarOdometrySpeedFromRobotEvent += positioning2Wheels.OnOdometryRobotSpeedReceived;        //Envoi des vitesses reçues de l'embarqué au module de calcul de positionnement
             positioning2Wheels.OnCalculatedLocationEvent += trajectoryGenerator.OnPhysicalPositionReceived;                 //Envoi du positionnement calculé au module de génération de trajectoire
+            positioning2Wheels.OnCalculatedLocationEvent += localWorldMapManager.OnPhysicalPositionReceived;
             trajectoryGenerator.OnGhostLocationEvent += localWorldMapManager.OnGhostLocationReceived;
             
             trajectoryGenerator.OnSpeedConsigneEvent += robotMsgGenerator.GenerateMessageSetSpeedConsigneToRobot;           //Transmission des commande de vitesse aux moteurs de déplacement
@@ -137,6 +138,8 @@ namespace RobotEurobot2Roues
 
             robotMsgProcessor.OnMessageCounterEvent += interfaceRobot.MessageCounterReceived;
             robotMsgGenerator.OnSetSpeedConsigneToRobotReceivedEvent += interfaceRobot.UpdatePolarSpeedConsigneOnGraph; //Valable quelque soit la source des consignes vitesse
+
+            localWorldMapManager.OnLocalWorldMapForDisplayOnlyEvent += interfaceRobot.OnLocalWorldMapStrategyEvent;
 
             /// Envoi des ordres en provenance de l'interface graphique
             
